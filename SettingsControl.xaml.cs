@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using InputInterceptorNS;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace XtraMouse
 {
@@ -8,6 +10,7 @@ namespace XtraMouse
 	public partial class SettingsControl : UserControl
 	{
 		public DataPlugin Plugin { get; }
+		XtraMouse.Intercept Intermouse;
 
 		public SettingsControl()
 		{
@@ -17,6 +20,14 @@ namespace XtraMouse
 		public SettingsControl(DataPlugin plugin) : this()
 		{
 			this.Plugin = plugin;
+		}
+
+		private void Select_Click(object sender, RoutedEventArgs e)
+		{
+		}
+
+		private void Capture_Click(object sender, RoutedEventArgs e)
+		{
 		}
 	}
 }
