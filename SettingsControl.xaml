@@ -21,8 +21,6 @@
         <TextBlock x:Name="block4" HorizontalAlignment="Left" Margin="140,112,0,0" TextWrapping="Wrap" Text="Button 4" VerticalAlignment="Top" Width="32" Height="9" FontSize="8"/>
         <Ellipse x:Name="button5" HorizontalAlignment="Left" Height="20" Margin="180,92,0,0" Stroke="Black" VerticalAlignment="Top" Width="30" Fill="{Binding ButtonColor4}"/>
         <TextBlock x:Name="block5" HorizontalAlignment="Left" Margin="180,112,0,0" TextWrapping="Wrap" Text="Button 5" VerticalAlignment="Top" Width="32" Height="9" FontSize="8"/>
-        <Ellipse x:Name="button6" HorizontalAlignment="Left" Height="20" Margin="220,92,0,0" Stroke="Black" VerticalAlignment="Top" Width="30" Fill="{Binding ButtonColor5}"/>
-        <TextBlock x:Name="block6" HorizontalAlignment="Left" Margin="220,112,0,0" TextWrapping="Wrap" Text="Button 6" VerticalAlignment="Top" Width="32" Height="9" FontSize="8"/>
 
     </Grid>
 </UserControl>
