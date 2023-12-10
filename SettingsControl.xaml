@@ -1,22 +1,28 @@
 ﻿<UserControl x:Class="XtraMouse.SettingsControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:XtraMouse"
-             xmlns:styles="clr-namespace:SimHub.Plugins.Styles;assembly=SimHub.Plugins" mc:Ignorable="d" 
-             xmlns:ui="clr-namespace:SimHub.Plugins.UI;assembly=SimHub.Plugins" 
-             d:DesignHeight="300" d:DesignWidth="300">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XtraMouse"
+        mc:Ignorable="d"
+        Height="200" Width="440">
+    <Grid Margin="0,2,0,-2">
+        <Label x:Name="SHlabel" Content="Left-click 'Select' using mouse to be captured for SimHub" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="340"/>
+        <TextBlock x:Name="Status" HorizontalAlignment="Left" Margin="15,35,0,0" TextWrapping="Wrap" Text="{Binding StatusText}" VerticalAlignment="Top" Height="21" Width="410"/>
+        <Button x:Name="select" Content="Select current device" HorizontalAlignment="Left" Margin="15,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.631,3.259" Click="Select_Click"/>
+        <Button x:Name="capture" Content="Capture selected device for SimHub use" HorizontalAlignment="Left" Margin="180,60,0,0" VerticalAlignment="Top" Visibility="Hidden" Click="Capture_Click"/>
+        <Ellipse x:Name="button1" HorizontalAlignment="Left" Height="20" Margin="20,92,0,0" Stroke="Black" VerticalAlignment="Top" Width="30" Fill="{Binding ButtonColor0}"/>
+        <TextBlock x:Name="block1" HorizontalAlignment="Left" Margin="20,112,0,0" TextWrapping="Wrap" Text="Button 1" VerticalAlignment="Top" Width="32" Height="9" FontSize="8"/>
+        <Ellipse x:Name="button2" HorizontalAlignment="Left" Height="20" Margin="60,92,0,0" Stroke="Black" VerticalAlignment="Top" Width="30" Fill="{Binding ButtonColor1}"/>
+        <TextBlock x:Name="block2" HorizontalAlignment="Left" Margin="60,112,0,0" TextWrapping="Wrap" Text="Button 2" VerticalAlignment="Top" Width="32" Height="9" FontSize="8"/>
+        <Ellipse x:Name="button3" HorizontalAlignment="Left" Height="20" Margin="100,92,0,0" Stroke="Black" VerticalAlignment="Top" Width="30" Fill="{Binding ButtonColor2}"/>
+        <TextBlock x:Name="block3" HorizontalAlignment="Left" Margin="100,112,0,0" TextWrapping="Wrap" Text="Button 3" VerticalAlignment="Top" Width="32" Height="9" FontSize="8"/>
+        <Ellipse x:Name="button4" HorizontalAlignment="Left" Height="20" Margin="140,92,0,0" Stroke="Black" VerticalAlignment="Top" Width="30" Fill="{Binding ButtonColor3}"/>
+        <TextBlock x:Name="block4" HorizontalAlignment="Left" Margin="140,112,0,0" TextWrapping="Wrap" Text="Button 4" VerticalAlignment="Top" Width="32" Height="9" FontSize="8"/>
+        <Ellipse x:Name="button5" HorizontalAlignment="Left" Height="20" Margin="180,92,0,0" Stroke="Black" VerticalAlignment="Top" Width="30" Fill="{Binding ButtonColor4}"/>
+        <TextBlock x:Name="block5" HorizontalAlignment="Left" Margin="180,112,0,0" TextWrapping="Wrap" Text="Button 5" VerticalAlignment="Top" Width="32" Height="9" FontSize="8"/>
+        <Ellipse x:Name="button6" HorizontalAlignment="Left" Height="20" Margin="220,92,0,0" Stroke="Black" VerticalAlignment="Top" Width="30" Fill="{Binding ButtonColor5}"/>
+        <TextBlock x:Name="block6" HorizontalAlignment="Left" Margin="220,112,0,0" TextWrapping="Wrap" Text="Button 6" VerticalAlignment="Top" Width="32" Height="9" FontSize="8"/>
 
-    <Grid>
-        <styles:SHSection Title="MY PLUGIN OPTIONS">
-            <StackPanel>
-                <styles:SHButtonPrimary HorizontalAlignment="Left">Primary button</styles:SHButtonPrimary>
-                <styles:SHButtonSecondary HorizontalAlignment="Left">Secondary button</styles:SHButtonSecondary>
-                <styles:SHLinkButton HorizontalAlignment="Left">Link button</styles:SHLinkButton>
-                <styles:SHLinkButtonSmall HorizontalAlignment="Left">Link button small</styles:SHLinkButtonSmall>
-                <ui:ControlsEditor FriendlyName="Increment Speed Warning" ActionName="DataPlugin.IncrementSpeedWarning"></ui:ControlsEditor>  
-            </StackPanel>
-        </styles:SHSection>
     </Grid>
 </UserControl>
