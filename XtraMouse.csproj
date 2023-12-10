@@ -52,7 +52,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="InputIntercept">
-      <HintPath>..\..\..\GitHub\InputIntercept\InputInterceptor\bin\Release\netstandard2.0\InputIntercept.dll</HintPath>
+      <HintPath>..\..\..\GitHub\InputIntercept\bin\Debug\netstandard2.0\InputIntercept.dll</HintPath>
     </Reference>
     <Reference Include="InputManagerCS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

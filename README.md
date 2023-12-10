@@ -24,11 +24,8 @@
 	- replace `SimHubPluginSdk` with `XtraMouse`
 - copy all but `AssemblyInfo.cs` from [`SimHubPluginSdk/Properties/`](../SimHubPluginSdk/Properties/) to `XtraMouse/Properties/`
 - [PropertyChanged code](https://github.com/Fody/PropertyChanged) for "live" XAML
-#### mouse interception plugin issues
-- [elapsed time from plugin end to restart](https://stackoverflow.com/questions/2821040/how-do-i-get-the-time-difference-between-two-datetime-objects-using-c)
-- continue using a mouse if the same device number and hardware ID? 
 
-### porting from XPF_XAML
+### porting from [XPF_XAML](https://github.com/blekenbleu/WPF_XAML)
 1. start with view model class `DataViewModel`, limit to 5 mouse buttons  
 	builds OK
 2. Add [reference for `using InputInterceptorNS;`](https://github.com/blekenbleu/InputIntercept) to XtraMouse in VS Solution Explorer:  
@@ -73,4 +70,23 @@ namespace XtraMouse
   </PropertyGroup>
 ```
 
+6. pushed `XPF_XAML/Intercept.cs` contents to `Intercept.cs`  
+	except for namespace, they are nearly identical...  
 
+7. Declare `Intermouse` in `DataPlugin.cs` `public class DataPlugin`;  
+	- `Intermouse?.End();` in `DataPlugin.End()`
+
+8. pushed methods from `XPF_XAML/MainWindow.xaml.cs` to `SettingsControl.xaml.cs`
+	- `this.DataContext = _mainViewModel;`
+	- Instance `Intermouse` in `SettingsControl.xaml.cs` *after* `InputInterceptor.Initialize()` success.  
+#### status / To Do
+- eliminate `Hooked()`
+- get captured mouse coordinate center working
+- add properties, button events, 
+- identify Settings to save and restore, e.g. selected mouse
+- proper icon
+
+#### mouse interception plugin issues
+- when to continue using designated mouse?
+- [elapsed time from plugin end to restart](https://stackoverflow.com/questions/2821040/how-do-i-get-the-time-difference-between-two-datetime-objects-using-c)
+- continue using a mouse if the same device number and hardware ID? 

@@ -123,7 +123,7 @@ namespace XtraMouse
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StatusText"));
 			}
 		}
-	}
+	}		// class DataViewModel
 
 	[PluginDescription("intercept events from an extra mouse")]
 	[PluginAuthor("blekenbleu")]
@@ -131,9 +131,7 @@ namespace XtraMouse
 	public class DataPlugin : IPlugin, IDataPlugin, IWPFSettingsV2
 	{
 		public DataPluginSettings Settings;
-
-		// callback needs to reference XAML control from a static method
-		private static DataViewModel _mainViewModel = new DataViewModel();
+		internal Intercept Intermouse;
 
 		/// <summary>
 		/// Instance of the current plugin manager
@@ -146,7 +144,7 @@ namespace XtraMouse
 		public ImageSource PictureIcon => this.ToIcon(Properties.Resources.sdkmenuicon);
 
 		/// <summary>
-		/// Gets a short plugin title to show in left menu. Return null if you want to use the title as defined in PluginName attribute.
+		/// A short plugin title to show in left menu. Return null to use the title defined in PluginName attribute.
 		/// </summary>
 		public string LeftMenuTitle => "XtraMouse";
 
@@ -184,6 +182,7 @@ namespace XtraMouse
 		{
 			// Save settings
 			this.SaveCommonSettings("GeneralSettings", Settings);
+			Intermouse?.End();
 		}
 
 		/// <summary>
@@ -203,7 +202,7 @@ namespace XtraMouse
 		/// <param name="pluginManager"></param>
 		public void Init(PluginManager pluginManager)
 		{
-			SimHub.Logging.Current.Info("Starting plugin");
+			SimHub.Logging.Current.Info("Starting XtraMouse plugin");
 
 			// Load settings
 			Settings = this.ReadCommonSettings<DataPluginSettings>("GeneralSettings", () => new DataPluginSettings());
