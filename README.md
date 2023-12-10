@@ -3,11 +3,11 @@
 
 - Repo created by GitHub Desktop:  
 	![](Docs/create.png)  
-- Created a new `XtraMouse` Visual Studio solution elsewhere  
+- Created a new `XtraMouse` Visual Studio 2022 solution elsewhere  
 	deleted its `.vs/` `obj/` and `Properties/` folders
 - Copied the rest of that new solution to the new repo
 - To insert SimHub example in new solution and project name:    
-	Use VIM split diff with [`SimHubPluginSdk`](../SimHubPluginSdk) folder:
+	Use [VIM](https://www.vim.org/download.php) split diff with [`SimHubPluginSdk`](../SimHubPluginSdk) folder:
 	- push SimHub `VisualStudioVersion` to `XtraMouse.sln`;  
 		and remove its `GlobalSection`  
 	- push SimHub `<Project ToolsVersion` to `XtraMouse.csproj`  
@@ -64,7 +64,8 @@ namespace XtraMouse
 
 	**Note**:&nbsp; adding `Intercept.cs` file in VS *does NOT* add the class;  
 	that is a separate step under Solution Exploder, what a PoS...  
-4: replaced SimHUb demo UI XAML content with WPF_XAML;&nbsp; added skeleton code to eliminate warnings
+4: replaced SimHUb demo UI XAML content with WPF_XAML;&nbsp; added skeleton code to eliminate warnings  
+	![](Docs/debug.png)  
 5: For `MouseHook` callback syntax added to `XtraMouse.csproj`:
 ```
   <PropertyGroup>
