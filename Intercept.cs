@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using Context = System.IntPtr;
 using Device = System.Int32;
 
 #nullable enable

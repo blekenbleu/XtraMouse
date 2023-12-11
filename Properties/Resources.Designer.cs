@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace XtraMouse.Properties {
-    using System;
-    
-    
+namespace XtraMouse.Properties
+{
+
+
     /// <summary>
     ///  A strongly typed resource class intended, among other things, for consulting localized strings
     /// </summary>

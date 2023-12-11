@@ -2,7 +2,6 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using static XtraMouse.Intercept;
 
 namespace XtraMouse
 {
