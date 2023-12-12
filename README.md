@@ -90,8 +90,6 @@ namespace XtraMouse
 	- Instance `Intermouse` in `SettingsControl.xaml.cs` *after* `InputInterceptor.Initialize()` success.  
 	![](Docs/debug.png)  
 #### status / To Do
-- eliminate `Hooked()`
-- get captured mouse coordinate center working
 - add properties, button events, 
 - identify Settings to save and restore, e.g. selected mouse
 - proper icon

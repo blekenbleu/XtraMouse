@@ -64,7 +64,7 @@ namespace XtraMouse
 		// https://stackoverflow.com/questions/13121155
 		public static void WriteStatus(string text)
 		{
-			_mainViewModel.StatusText = text;	   // _mainViewModel is static
+			_mainViewModel.StatusText = text;		// _mainViewModel is static
 		}
 
 		public static void ColorButton (ushort index, bool down)
@@ -93,10 +93,7 @@ namespace XtraMouse
 		private void Select_Click(object sender, RoutedEventArgs e)
 		{
 			if (99 == state)
-			{
-				Hooked();
 				return;
-			}
 
 			if (2 > Intercept.devices.Count)
 			{
@@ -106,7 +103,8 @@ namespace XtraMouse
 			}
 			else if (0 == state)
 			{
-				SHlabel.Content = $"state {state}:  mouse {Intercept.Stroke[0]} selected";
+//				SHlabel.Content = $"state {state}:  mouse {Intercept.Stroke[0]} selected";
+				SHlabel.Content = $"Mouse {Intercept.Stroke[0]} selected";
 				Selected = Intercept.Stroke[0];
 
 				select.Content = "Click to deselect";
@@ -118,7 +116,8 @@ namespace XtraMouse
 				Intercept.Captured = 0;
 				capture.Visibility = Visibility.Hidden;
 				if (1 < Intercept.devices.Count) {
-					SHlabel.Content = $"state {state}:  Left-click 'Select' using mouse to be captured for SimHub";
+//					SHlabel.Content = $"state {state}:  Left-click 'Select' using mouse to be captured for SimHub";
+					SHlabel.Content = "Left-click 'Select' using mouse to be captured for SimHub";
 					select.Content = "Select current device";
 					capture.Content = "Capture selected device for SimHub use";
 					state = 0;
@@ -126,10 +125,17 @@ namespace XtraMouse
 			}
 		}
 
-		bool Hooked()	   // what to do when a mouse is hooked; e.g. change callback
+		bool Hooked()		// callback filters on Intercept.Captured
 		{
-			Plugin.Intermouse?.Devices(Intercept.Captured);	// if 0, iterate thru all predicate devices
-			return true;
+			string foo = Plugin.Intermouse?.Devices(Intercept.Captured);
+			if (null != foo && "" != foo)
+			{
+				SHlabel.Content = foo;
+				if (1 == state)
+					state++;
+				return true;
+			}
+			return false;
 		}
 
 		private void Capture_Click(object sender, RoutedEventArgs e)
@@ -137,13 +143,13 @@ namespace XtraMouse
 			if (2 == state)
 			{
 				Intercept.Stroke[1] = Intercept.Stroke[2] = Intercept.Stroke[3] = Intercept.Stroke[4] = 0;
-//			  SHlabel.Content = _mainViewModel.ButtonColor0+_mainViewModel.ButtonColor1+_mainViewModel.ButtonColor2
-//				  +_mainViewModel.ButtonColor3+_mainViewModel.ButtonColor4;
+//				SHlabel.Content = _mainViewModel.ButtonColor0+_mainViewModel.ButtonColor1+_mainViewModel.ButtonColor2
+//					+_mainViewModel.ButtonColor3+_mainViewModel.ButtonColor4;
 				return;
 			}
 			else Intercept.Captured = Selected;
 
-			// capture.Visibility = Visibility.Hidden;
+//			capture.Visibility = Visibility.Hidden;
 			capture.Content = "click to center captured coordinates";
 			Hooked();
 		}

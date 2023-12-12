@@ -67,7 +67,7 @@ namespace XtraMouse
 						Stroke[0] = (short)device;
 						string scroll = (0 == (0xC00 & (ushort)ms.State)) ? "" : $" x:{XY(ref ms, 11)}, y:{XY(ref ms, 10)}";
 						// Mouse XY coordinates are raw changes
-						Writestring($"Device: {device}; MouseStroke: X:{ms.X}, Y:{ms.Y}; S: {(ushort)ms.State}" + scroll);
+						Writestring($"Mouse: {device};  MouseStroke:  X:{ms.X}, Y:{ms.Y}; S: {(ushort)ms.State}" + scroll);
 						if (0 != ms.State)
 							Buttons((ushort)ms.State);
 					}
@@ -151,15 +151,18 @@ namespace XtraMouse
 		}
  */
 
-		public bool Devices(short stick)
+		public string Devices(short stick)
 		{
+			if (2 > devices?.Count)
+			{
+				return "No extra mouse to capture";
+			}
 			for (int dd = 0; dd < devices?.Count; dd++)
 			{
-				if (0 == stick || stick == devices[dd].Device)
-					MessageBox.Show(Application.Current.MainWindow,		// should display on top, regardless of focus
-									$"device: {devices[dd].Device}: " + devices[dd].Names[0], "Intercept.Devices");
+				if (stick == devices[dd].Device)
+					return $"Mouse: {devices[dd].Device}: " + devices[dd].Names[0];
 			}
-			return true;
+			return "";
 		}
 	}
 }
