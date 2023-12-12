@@ -10,9 +10,9 @@ namespace XtraMouse
 	/// </summary>
 	public partial class SettingsControl : UserControl
 	{
-		public DataPlugin Plugin { get; }
-		static ushort state = 0;			// pasted from https://github.com/blekenbleu/WPF_XAML/MainWindow.xaml.cs
-		static short Selected = 0;
+		public XtraMouse Plugin { get; }
+		internal static ushort state = 0;			// pasted from https://github.com/blekenbleu/WPF_XAML/MainWindow.xaml.cs
+		internal static short Selected = 0;
 
 		// callback needs to reference XAML control from a static method
 		internal static DataViewModel _mainViewModel = new();
@@ -22,7 +22,7 @@ namespace XtraMouse
 			InitializeComponent();
 		}
 
-		public SettingsControl(DataPlugin plugin) : this()
+		public SettingsControl(XtraMouse plugin) : this()
 		{
 			this.Plugin = plugin;
 

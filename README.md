@@ -21,7 +21,7 @@
 		push `<OutputPath>` and `<StartProgram>` `<PropertyGroup`  
 		push `<Reference Include` `<ItemGroup>`  
 	- push `<Compile Include` `<ItemGroup>`, with  
-		`"DataPlugin.cs"` replacing `"UserControl1.cs"` and  
+		`"XtraMouse.cs"` replacing `"UserControl1.cs"` and  
 		`"SettingsControl.xaml.cs"` replacing `"UserControl1.Designer.cs"`  
 	- push `<Page Include="Properties\DesignTimeResources.xaml"` `<ItemGroup>`
 - Replace corresponding source files
@@ -82,17 +82,18 @@ namespace XtraMouse
 6. pushed `XPF_XAML/Intercept.cs` contents to `Intercept.cs`  
 	except for namespace, they are nearly identical...  
 
-7. Declare `Intermouse` in `DataPlugin.cs` `public class DataPlugin`;  
-	- `Intermouse?.End();` in `DataPlugin.End()`
+7. Declare `Intermouse` in `XtraMouse.cs` `public class XtraMouse`;  
+	- `Intermouse?.End();` in `XtraMouse.End()`
 
 8. pushed methods from `XPF_XAML/MainWindow.xaml.cs` to `SettingsControl.xaml.cs`
 	- `this.DataContext = _mainViewModel;`
 	- Instance `Intermouse` in `SettingsControl.xaml.cs` *after* `InputInterceptor.Initialize()` success.  
 	![](Docs/debug.png)  
+9. add icon, properties for mouse, scroll XY
+10. save mouse state @ e.g. game changes
 #### status / To Do
-- add properties, button events, 
-- identify Settings to save and restore, e.g. selected mouse
-- proper icon
+- add button events 
+- conditionally restore mouse state, e.g. selected mouse
 
 #### mouse interception plugin issues
 - when to continue using designated mouse?

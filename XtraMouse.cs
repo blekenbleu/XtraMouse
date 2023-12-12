@@ -128,7 +128,7 @@ namespace XtraMouse
 	[PluginDescription("intercept events from an extra mouse")]
 	[PluginAuthor("blekenbleu")]
 	[PluginName("XtraMouse")]
-	public class DataPlugin : IPlugin, IDataPlugin, IWPFSettingsV2
+	public class XtraMouse : IPlugin, IDataPlugin, IWPFSettingsV2
 	{
 		public DataPluginSettings Settings;
 		internal Intercept Intermouse;
@@ -181,6 +181,15 @@ namespace XtraMouse
 		public void End(PluginManager pluginManager)
 		{
 			// Save settings
+			if (null != Intermouse)
+			{
+				Settings.Count = Intermouse.Count;
+				Settings.Device = Intermouse.Devices(Intercept.Captured);
+			}
+			Settings.state = SettingsControl.state;
+			Settings.Selected = SettingsControl.Selected;
+			Settings.Stroke = Intercept.Stroke;
+			Settings.EndTime = DateTime.Now;
 			this.SaveCommonSettings("GeneralSettings", Settings);
 			Intermouse?.End();
 		}
@@ -209,6 +218,10 @@ namespace XtraMouse
 
 			// Declare a property available in the property list, this gets evaluated "on demand" (when shown or used in formulas)
 			this.AttachDelegate("CurrentDateTime", () => DateTime.Now);
+			this.AttachDelegate("Mouse_X", () => Intercept.Stroke[1]);
+			this.AttachDelegate("Mouse_Y", () => Intercept.Stroke[2]);
+			this.AttachDelegate("Scroll_x", () => Intercept.Stroke[3]);
+			this.AttachDelegate("Scroll_y", () => Intercept.Stroke[4]);
 
 			// Declare an event
 			this.AddEvent("SpeedWarning");
