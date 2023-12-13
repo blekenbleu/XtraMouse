@@ -15,6 +15,7 @@ namespace XtraMouse
 		private string _statusText;
 		// PropertyChanged does not work for array elements
 		private string _button0, _button1, _button2, _button3, _button4;
+		internal ushort[] button = {0, 0, 0, 0, 0};
 
 		public string ButtonColor0
 		{
@@ -29,6 +30,12 @@ namespace XtraMouse
 					return;
 
 				_button0 = value;
+
+				if (red == value)
+				{
+					button[0] = 127;
+					that.TriggerEvent("Button0");
+				} else button[0] = 0;
 
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ButtonColor0"));
 			}
@@ -48,6 +55,12 @@ namespace XtraMouse
 
 				_button1 = value;
 
+				if (red == value)
+				{
+					button[1] = 127;
+					that.TriggerEvent("Button1");
+				} else button[1] = 0;
+
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ButtonColor1"));
 			}
 		}
@@ -65,6 +78,12 @@ namespace XtraMouse
 					return;
 
 				_button2 = value;
+
+				if (red == value)
+				{
+					button[2] = 127;
+					that.TriggerEvent("Button2");
+				} else button[2] = 0;
 
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ButtonColor2"));
 			}
@@ -84,6 +103,12 @@ namespace XtraMouse
 
 				_button3 = value;
 
+				if (red == value)
+				{
+					button[3] = 127;
+					that.TriggerEvent("Button3");
+				} else button[3] = 0;
+
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ButtonColor3"));
 			}
 		}
@@ -101,6 +126,12 @@ namespace XtraMouse
 					return;
 
 				_button4 = value;
+
+				if (red == value)
+				{
+					button[4] = 127;
+					that.TriggerEvent("Button4");
+				} else button[4] = 0;
 
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ButtonColor4"));
 			}
@@ -122,6 +153,13 @@ namespace XtraMouse
 
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StatusText"));
 			}
+		}
+
+		XtraMouse that;
+
+		internal void ThisSet(XtraMouse xm)
+		{
+			that = xm;
 		}
 	}		// class DataViewModel
 
@@ -211,7 +249,10 @@ namespace XtraMouse
 		/// <param name="pluginManager"></param>
 		public void Init(PluginManager pluginManager)
 		{
-			SimHub.Logging.Current.Info("Starting XtraMouse plugin");
+			SimHub.Logging.Current.Info("XtraMouse Init()");
+
+			// will setting this at Init() work for Events during DataUpdate()?
+			SettingsControl._mainViewModel.ThisSet(this);
 
 			// Load settings
 			Settings = this.ReadCommonSettings<DataPluginSettings>("GeneralSettings", () => new DataPluginSettings());
@@ -222,9 +263,19 @@ namespace XtraMouse
 			this.AttachDelegate("Mouse_Y", () => Intercept.Stroke[2]);
 			this.AttachDelegate("Scroll_x", () => Intercept.Stroke[3]);
 			this.AttachDelegate("Scroll_y", () => Intercept.Stroke[4]);
+			this.AttachDelegate("SpeedWarning", () => Settings.SpeedWarningLevel);
+			this.AttachDelegate("button0", () => SettingsControl._mainViewModel.button[0]);
+			this.AttachDelegate("button1", () => SettingsControl._mainViewModel.button[1]);
+			this.AttachDelegate("button2", () => SettingsControl._mainViewModel.button[2]);
+			this.AttachDelegate("button3", () => SettingsControl._mainViewModel.button[3]);
+			this.AttachDelegate("button4", () => SettingsControl._mainViewModel.button[4]);
 
-			// Declare an event
-			this.AddEvent("SpeedWarning");
+			// Declare events
+			this.AddEvent("Button0");
+			this.AddEvent("Button1");
+			this.AddEvent("Button2");
+			this.AddEvent("Button3");
+			this.AddEvent("Button4");
 
 			// Declare an action which can be called
 			this.AddAction("IncrementSpeedWarning",(a, b) =>

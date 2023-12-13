@@ -91,8 +91,8 @@ namespace XtraMouse
 	![](Docs/debug.png)  
 9. add icon, properties for mouse, scroll XY
 10. save mouse state @ e.g. game changes
+11. add button events, button and mouse value properties
 #### status / To Do
-- add button events 
 - conditionally restore mouse state, e.g. selected mouse
 
 #### SimHub-specific mouse interception plugin issues
