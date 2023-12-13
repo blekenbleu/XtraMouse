@@ -4,8 +4,8 @@
  plugin UI buttons turn red corresponding to pressed buttons of intercepted mice.
 
 - Built using Visual Studio 2022 Community with C# `<langVersion>9.0`  
-- Depends on [InputIntercept](https://github.com/blekenbleu/InputIntercept);&nbsp; see [`<HintPath>`](https://github.com/blekenbleu/XtraMouse/blob/main/XtraMouse.csproj#L55)  
-	- ... which requires [this installer package](https://github.com/oblitum/Interception/releases/latest) for [the Interception driver](https://www.oblita.com/interception.html).  
+- Requires `stripped` branch of [InputIntercept](https://github.com/blekenbleu/InputIntercept);&nbsp; see [`<HintPath>`](https://github.com/blekenbleu/XtraMouse/blob/main/XtraMouse.csproj#L55)  
+	... and [this installation package](https://github.com/oblitum/Interception/releases/latest) for [the Interception driver](https://www.oblita.com/interception.html).  
 - Repo created by GitHub Desktop:  
 	![](Docs/create.png)  
 - Created a new `XtraMouse` Visual Studio 2022 solution elsewhere  
@@ -30,7 +30,7 @@
 - copy all but `AssemblyInfo.cs` from [`SimHubPluginSdk/Properties/`](../SimHubPluginSdk/Properties/) to `XtraMouse/Properties/`
 - [PropertyChanged code](https://github.com/Fody/PropertyChanged) for "live" XAML
 
-### porting from [XPF_XAML](https://github.com/blekenbleu/WPF_XAML)
+### porting `Intercept` from [XPF_XAML](https://github.com/blekenbleu/WPF_XAML)
 
 1. start with view model class `DataViewModel`, limit to 5 mouse buttons  
 	builds OK
@@ -95,7 +95,7 @@ namespace XtraMouse
 - add button events 
 - conditionally restore mouse state, e.g. selected mouse
 
-#### mouse interception plugin issues
+#### SimHub-specific mouse interception plugin issues
 - when to continue using designated mouse?
 - [elapsed time from plugin end to restart](https://stackoverflow.com/questions/2821040/how-do-i-get-the-time-difference-between-two-datetime-objects-using-c)
 - continue using a mouse if the same device number and hardware ID? 
