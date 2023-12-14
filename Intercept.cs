@@ -22,6 +22,7 @@ namespace XtraMouse
 		public int Count => (null != devices) ? devices.Count : 0;
 		public static short[] Stroke = { 0, 0, 0, 0, 0 };
 		public static short Captured = 0;
+		internal static ushort code = 99;
 
 		static void Dummy(ushort index, bool down) { }
 
@@ -29,20 +30,36 @@ namespace XtraMouse
 		{
 		}
 
+		public ushort Initialize()
+		{
+			if (!InputInterceptor.Initialized)
+			{
+				MessageBox.Show(Application.Current.MainWindow,
+								InputInterceptor.CheckDriverInstalled() ?
+								"Input.Interceptor not initialized;  valid dll probably not found"
+								: "Input interception driver not installed.", "Intercept");
+				return 98;
+			}
+			try {
+				devices = InputInterceptor.GetDeviceList(InputInterceptor.IsMouse);
+			} catch (Exception exception) {
+				MessageBox.Show(Application.Current.MainWindow,
+								$"GetDeviceList(): {exception}", "Intercept.Initialize()");
+				End();
+				return 97;
+			}
+			if (2 > devices.Count)
+			{
+				End();
+			 	return 96;
+			} else return code = 0;
+		}
+
 		public bool Initialize(Intercept.WriteStatus writeString, Intercept.ButtonDel foo)
 		{
 			Writestring = writeString;
 			ButtonEvent = foo;
 
-
-			if (!InputInterceptor.Initialized)
-			{
-				if (!InputInterceptor.CheckDriverInstalled())
-					Writestring("Input interception driver not installed.");
-				else MessageBox.Show(Application.Current.MainWindow,
-								 "Input.Interceptor not initialized;  valid dll probably not found", "Intercept");
-				return false;
-			}
 			return true;
 		}
 
@@ -55,11 +72,11 @@ namespace XtraMouse
 		// https://learn.microsoft.com/en-us/dotnet/framework/interop/how-to-implement-callback-functions
 		private static bool MouseCallback(Device device, ref MouseStroke ms)
 		{
+			if (99 == code)
+				return true;					// pass along all strokes
+
 			try
 			{
-				if (null == devices)
-					devices = InputInterceptor.GetDeviceList(InputInterceptor.IsMouse);
-
 				if (device != Captured)
 				{
 					if (0 == Captured)
@@ -98,7 +115,7 @@ namespace XtraMouse
 			}
 			catch (Exception exception)
 			{
-				Console.WriteLine($"MouseStroke: {exception}");
+				Console.WriteLine($"Captured MouseStroke: {exception}");
 			}
 
 			return false;	// do not pass Captured mouse strokes
