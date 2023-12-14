@@ -11,8 +11,12 @@ namespace XtraMouse
 	public partial class SettingsControl : UserControl
 	{
 		public XtraMouse Plugin { get; }
-		internal static ushort state = 0;			// pasted from https://github.com/blekenbleu/WPF_XAML/MainWindow.xaml.cs
+		internal static ushort state = 0;
 		internal static short Selected = 0;
+		string[] oops = { "Only one mouse;  none available to capture",
+						"null Intercept.devices.Count",
+						"null Intercept.devices",
+						"Intercept.Initialize():  failed" };
 
 		// callback needs to reference XAML control from a static method
 		internal static DataViewModel _mainViewModel = new();
@@ -28,37 +32,11 @@ namespace XtraMouse
 
 			this.DataContext = _mainViewModel;
 
-			try
-			{
-				// InputInterceptor.Initialize() absolutely must be run before new Intercept()!!
-				if (!InputInterceptor.Initialize())  // fails if DLL not linked
-				{
-					MessageBox.Show(Application.Current.MainWindow, "Invalid or missing DLL;  closing",
-									 "InputInterceptor.Initialize()");
-					WriteStatus("InputInterceptor.Initialize():  Invalid or missing DLL");
-					select.Content = "OK";
-					state = 99;
-				} else {
-	
-					this.Plugin.Intermouse = new Intercept();
-
-					if (!this.Plugin.Intermouse.Initialize(WriteStatus, ColorButton))
-					{
-						MessageBox.Show(Application.Current.MainWindow, "No interception", "Intermouse.Initialize()");
-						state = 99;
-						this.Plugin.Intermouse?.End();
-					}
-				}
-
-			} catch(Exception exception) {
-				MessageBox.Show(Application.Current.MainWindow, "probably bad: '"
-				+ InputInterceptor.DPath + "'\n" + exception,
-				"InputInterceptor.Initialize() Exception");
-				SHlabel.Content = "InputInterceptor.Initialize():  Invalid or missing DLL";
+			if (0 != Intercept.code) {
 				select.Content = "OK";
-				state = 99;
-//				this.Plugin.Intermouse?.End();
+				SHlabel.Content = oops[plugin.state - 96];
 			}
+			else plugin.Intermouse.Initialize(WriteStatus, ColorButton);
 		}
 
 		// https://stackoverflow.com/questions/13121155
@@ -92,16 +70,10 @@ namespace XtraMouse
 
 		private void Select_Click(object sender, RoutedEventArgs e)
 		{
-			if (99 == state)
+			if (99 == Intercept.code)
 				return;
 
-			if (2 > Intercept.devices.Count)
-			{
-				SHlabel.Content = "Only one mouse;  none available to capture";
-				select.Content = "OK";
-				state = 99;
-			}
-			else if (0 == state)
+			if (0 == state)
 			{
 //				SHlabel.Content = $"state {state}:  mouse {Intercept.Stroke[0]} selected";
 				SHlabel.Content = $"Mouse {Intercept.Stroke[0]} selected";
