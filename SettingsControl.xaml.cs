@@ -11,7 +11,6 @@ namespace XtraMouse
 	public partial class SettingsControl : UserControl
 	{
 		public XtraMouse Plugin { get; }
-		internal static ushort state = 0;
 		internal static short Selected = 0;
 		string[] oops = { "Only one mouse;  none available to capture",
 						"null Intercept.devices.Count",
@@ -73,26 +72,26 @@ namespace XtraMouse
 			if (99 == Intercept.code)
 				return;
 
-			if (0 == state)
+			if (0 == Plugin.state)
 			{
-//				SHlabel.Content = $"state {state}:  mouse {Intercept.Stroke[0]} selected";
+//				SHlabel.Content = $"state {Plugin.state}:  mouse {Intercept.Stroke[0]} selected";
 				SHlabel.Content = $"Mouse {Intercept.Stroke[0]} selected";
 				Selected = Intercept.Stroke[0];
 
 				select.Content = "Click to deselect";
 				capture.Visibility = Visibility.Visible;
-				state = 1;
+				Plugin.state = 1;
 			}
 			else	// deselect if state 1 or 2
 			{
 				Intercept.Captured = 0;
 				capture.Visibility = Visibility.Hidden;
 				if (1 < Intercept.devices.Count) {
-//					SHlabel.Content = $"state {state}:  Left-click 'Select' using mouse to be captured for SimHub";
+//					SHlabel.Content = $"state {Plugin.state}:  Left-click 'Select' using mouse to be captured for SimHub";
 					SHlabel.Content = "Left-click 'Select' using mouse to be captured for SimHub";
 					select.Content = "Select current device";
 					capture.Content = "Capture selected device for SimHub use";
-					state = 0;
+					Plugin.state = 0;
 				}
 			}
 		}
@@ -103,8 +102,8 @@ namespace XtraMouse
 			if (null != foo && "" != foo)
 			{
 				SHlabel.Content = foo;
-				if (1 == state)
-					state++;
+				if (1 == Plugin.state)
+					Plugin.state++;
 				return true;
 			}
 			return false;
@@ -112,7 +111,7 @@ namespace XtraMouse
 
 		private void Capture_Click(object sender, RoutedEventArgs e)
 		{
-			if (2 == state)
+			if (2 == Plugin.state)
 			{
 				Intercept.Stroke[1] = Intercept.Stroke[2] = Intercept.Stroke[3] = Intercept.Stroke[4] = 0;
 //				SHlabel.Content = _mainViewModel.ButtonColor0+_mainViewModel.ButtonColor1+_mainViewModel.ButtonColor2

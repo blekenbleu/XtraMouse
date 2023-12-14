@@ -227,7 +227,7 @@ namespace XtraMouse
 				Settings.Count = Intermouse.Count;
 				Settings.Device = Intermouse.Devices(Intercept.Captured);
 			}
-			Settings.state = SettingsControl.state;
+			Settings.state = state;
 			Settings.Selected = SettingsControl.Selected;
 			Settings.Stroke = Intercept.Stroke;
 			Settings.EndTime = DateTime.Now;
@@ -278,7 +278,7 @@ namespace XtraMouse
                 				"InputInterceptor.Initialize() Exception");
 			}
 
-			if (0 == state)
+			if (4 > state)
 			{
 				this.AttachDelegate("Mouse_X", () => Intercept.Stroke[1]);
 				this.AttachDelegate("Mouse_Y", () => Intercept.Stroke[2]);
