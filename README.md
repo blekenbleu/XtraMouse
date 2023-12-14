@@ -32,7 +32,7 @@
 
 ### porting `Intercept` from [XPF_XAML](https://github.com/blekenbleu/WPF_XAML)
 
-1. start with view model class `DataViewModel`, limit to 5 mouse buttons  
+1. start with view model class `DataViewModel`;  5 mouse button limit  
 	builds OK
 2. Add [reference for `using InputInterceptorNS;`](https://github.com/blekenbleu/InputIntercept) to XtraMouse in VS Solution Explorer:  
 	`<HintPath>..\..\..\GitHub\InputIntercept\bin\Release\netstandard2.0\InputIntercept.dll</HintPath>`  
@@ -82,12 +82,12 @@ namespace XtraMouse
 6. pushed `XPF_XAML/Intercept.cs` contents to `Intercept.cs`  
 	except for namespace, they are nearly identical...  
 
-7. Declare `Intermouse` in `XtraMouse.cs` `public class XtraMouse`;  
+7. Declare and instance `Intermouse` in `XtraMouse.cs` `public class XtraMouse`;  
+	- *after* `InputInterceptor.Initialize()` success
 	- `Intermouse?.End();` in `XtraMouse.End()`
 
 8. pushed methods from `XPF_XAML/MainWindow.xaml.cs` to `SettingsControl.xaml.cs`
 	- `this.DataContext = _mainViewModel;`
-	- Instance `Intermouse` in `SettingsControl.xaml.cs` *after* `InputInterceptor.Initialize()` success.  
 	![](Docs/debug.png)  
 9. add icon, properties for mouse, scroll XY
 10. save mouse state @ e.g. game changes
