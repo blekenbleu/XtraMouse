@@ -1,8 +1,10 @@
-﻿using GameReaderCommon;
+﻿using InputInterceptorNS;
+using GameReaderCommon;
 using SimHub.Plugins;
 using System;
 using System.Windows.Media;
 using System.ComponentModel;
+using System.Windows;
 
 namespace XtraMouse
 {
@@ -169,7 +171,8 @@ namespace XtraMouse
 	public class XtraMouse : IPlugin, IDataPlugin, IWPFSettingsV2
 	{
 		public DataPluginSettings Settings;
-		internal Intercept Intermouse;
+		internal Intercept Intermouse;		// instanced in SettingsControl()
+		internal ushort state = 99;			// assume the worst
 
 		/// <summary>
 		/// Instance of the current plugin manager
@@ -239,7 +242,7 @@ namespace XtraMouse
 		/// <returns></returns>
 		public System.Windows.Controls.Control GetWPFSettingsControl(PluginManager pluginManager)
 		{
-			return new SettingsControl(this);
+			return new SettingsControl(this);		// seemingly invoked *after* Init()
 		}
 
 		/// <summary>
@@ -251,7 +254,7 @@ namespace XtraMouse
 		{
 			SimHub.Logging.Current.Info("XtraMouse Init()");
 
-			// will setting this at Init() work for Events during DataUpdate()?
+			// setting this at Init() works for Events during DataUpdate()
 			SettingsControl._mainViewModel.ThisSet(this);
 
 			// Load settings
@@ -259,23 +262,41 @@ namespace XtraMouse
 
 			// Declare a property available in the property list, this gets evaluated "on demand" (when shown or used in formulas)
 			this.AttachDelegate("CurrentDateTime", () => DateTime.Now);
-			this.AttachDelegate("Mouse_X", () => Intercept.Stroke[1]);
-			this.AttachDelegate("Mouse_Y", () => Intercept.Stroke[2]);
-			this.AttachDelegate("Scroll_x", () => Intercept.Stroke[3]);
-			this.AttachDelegate("Scroll_y", () => Intercept.Stroke[4]);
 			this.AttachDelegate("SpeedWarning", () => Settings.SpeedWarningLevel);
-			this.AttachDelegate("button0", () => SettingsControl._mainViewModel.button[0]);
-			this.AttachDelegate("button1", () => SettingsControl._mainViewModel.button[1]);
-			this.AttachDelegate("button2", () => SettingsControl._mainViewModel.button[2]);
-			this.AttachDelegate("button3", () => SettingsControl._mainViewModel.button[3]);
-			this.AttachDelegate("button4", () => SettingsControl._mainViewModel.button[4]);
 
-			// Declare events
-			this.AddEvent("Button0");
-			this.AddEvent("Button1");
-			this.AddEvent("Button2");
-			this.AddEvent("Button3");
-			this.AddEvent("Button4");
+			try
+            {
+                // InputInterceptor.Initialize() absolutely must be run before new Intercept()!!
+                if (InputInterceptor.Initialize())  // fails if DLL not linked
+				{
+					Intermouse = new Intercept();
+					state = Intermouse.Initialize();
+				}
+			} catch(Exception exception) {
+				MessageBox.Show(Application.Current.MainWindow, "probably bad: '"
+    					      	+ InputInterceptor.DPath + "'\n" + exception,
+                				"InputInterceptor.Initialize() Exception");
+			}
+
+			if (0 == state)
+			{
+				this.AttachDelegate("Mouse_X", () => Intercept.Stroke[1]);
+				this.AttachDelegate("Mouse_Y", () => Intercept.Stroke[2]);
+				this.AttachDelegate("Scroll_x", () => Intercept.Stroke[3]);
+				this.AttachDelegate("Scroll_y", () => Intercept.Stroke[4]);
+				this.AttachDelegate("button0", () => SettingsControl._mainViewModel.button[0]);
+				this.AttachDelegate("button1", () => SettingsControl._mainViewModel.button[1]);
+				this.AttachDelegate("button2", () => SettingsControl._mainViewModel.button[2]);
+				this.AttachDelegate("button3", () => SettingsControl._mainViewModel.button[3]);
+				this.AttachDelegate("button4", () => SettingsControl._mainViewModel.button[4]);
+
+				// Declare events
+				this.AddEvent("Button0");
+				this.AddEvent("Button1");
+				this.AddEvent("Button2");
+				this.AddEvent("Button3");
+				this.AddEvent("Button4");
+			}
 
 			// Declare an action which can be called
 			this.AddAction("IncrementSpeedWarning",(a, b) =>
