@@ -13,7 +13,7 @@ namespace XtraMouse
 	[PluginName("XtraMouse")]
 	public class XtraMouse : IPlugin, IDataPlugin, IWPFSettingsV2
 	{
-		public DataPluginSettings Settings;
+		private XtraMouseSettings Settings;
 		internal Intercept Intermouse;		// instanced in SettingsControl()
 		internal ushort state = 99;			// assume the worst
 
@@ -65,17 +65,31 @@ namespace XtraMouse
 		public void End(PluginManager pluginManager)
 		{
 			// Save settings
-			if (null != Intermouse)
-			{
-				Settings.Count = Intermouse.Count;
-				Settings.Device = Intermouse.Devices(Intercept.Captured);
-			}
 			Settings.state = state;
 			Settings.Selected = SettingsControl.Selected;
-			Settings.Stroke = Intercept.Stroke;
+			if (null != Intermouse)
+			{
+				MessageBox.Show(Application.Current.MainWindow,
+    					      	$"Intermouse.Devices({Intercept.Captured}):  " + Intermouse.Devices(Intercept.Captured),
+                				"XtraMouse.End()");
+				Settings.Count = Intermouse.Count;
+				Settings.Device = Intermouse.Devices(Intercept.Captured);
+				Settings.Stroke = Intercept.Stroke;
+				Intermouse.End();
+			}
 			Settings.EndTime = DateTime.Now;
 			this.SaveCommonSettings("GeneralSettings", Settings);
-			Intermouse?.End();
+		}
+
+		void Resume()
+		{
+			if (Intermouse.Count == Settings.Count
+			 && Intermouse.Devices(Settings.Selected) == Settings.Device)
+			{
+				Intercept.Captured = SettingsControl.Selected = Settings.Selected;
+				state = Settings.state;
+				Intercept.Stroke = Settings.Stroke;
+			}
 		}
 
 		/// <summary>
@@ -85,7 +99,7 @@ namespace XtraMouse
 		/// <returns></returns>
 		public System.Windows.Controls.Control GetWPFSettingsControl(PluginManager pluginManager)
 		{
-			return new SettingsControl(this);		// seemingly invoked *after* Init()
+			return new SettingsControl(this);		// invoked *after* Init()
 		}
 
 		/// <summary>
@@ -101,10 +115,11 @@ namespace XtraMouse
 			SettingsControl._mainViewModel.ThisSet(this);
 
 			// Load settings
-			Settings = this.ReadCommonSettings<DataPluginSettings>("GeneralSettings", () => new DataPluginSettings());
+			Settings = this.ReadCommonSettings<XtraMouseSettings>("GeneralSettings", () => new XtraMouseSettings());
 
 			// Declare a property available in the property list, this gets evaluated "on demand" (when shown or used in formulas)
 			this.AttachDelegate("CurrentDateTime", () => DateTime.Now);
+			this.AttachDelegate("Settings.EndTime", () => Settings.EndTime);
 			this.AttachDelegate("SpeedWarning", () => Settings.SpeedWarningLevel);
 
 			try
@@ -123,6 +138,7 @@ namespace XtraMouse
 
 			if (4 > state)
 			{
+				Resume();
 				this.AttachDelegate("Mouse_X", () => Intercept.Stroke[1]);
 				this.AttachDelegate("Mouse_Y", () => Intercept.Stroke[2]);
 				this.AttachDelegate("Scroll_x", () => Intercept.Stroke[3]);
@@ -132,6 +148,14 @@ namespace XtraMouse
 				this.AttachDelegate("button2", () => SettingsControl._mainViewModel.button[2]);
 				this.AttachDelegate("button3", () => SettingsControl._mainViewModel.button[3]);
 				this.AttachDelegate("button4", () => SettingsControl._mainViewModel.button[4]);
+
+				this.AttachDelegate("Intermouse.Count", () => Intermouse.Count);
+				this.AttachDelegate("Settings.Count", () => Settings.Count);
+				this.AttachDelegate("Settings.Selected", () => Settings.Selected);
+				this.AttachDelegate("SettingsControl.Selected", () => SettingsControl.Selected);
+				this.AttachDelegate("Intercept.Captured", () => Intercept.Captured);
+				this.AttachDelegate("Settings.Device", () => Settings.Device);
+				this.AttachDelegate("Intermouse.Devices(Settings.Selected)", () => Intermouse.Devices(Settings.Selected));
 
 				// Declare events
 				this.AddEvent("Button0");

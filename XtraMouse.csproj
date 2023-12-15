@@ -94,7 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="XtraMouse.cs" />
-    <Compile Include="DataPluginSettings.cs" />
+    <Compile Include="XtraMouseSettings.cs" />
     <Compile Include="Intercept.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
