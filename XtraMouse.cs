@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.ComponentModel;
 using System.Windows;
 
-namespace XtraMouse
+namespace blekenbleu
 {
 	[PluginDescription("intercept events from an extra mouse")]
 	[PluginAuthor("blekenbleu")]

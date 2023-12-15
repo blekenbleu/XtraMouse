@@ -10,7 +10,7 @@
     <ProjectGuid>{E7C6390F-D966-48EE-A905-E43D20FB9388}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XtraMouse</RootNamespace>
+    <RootNamespace>blekenbleu</RootNamespace>
     <AssemblyName>XtraMouse</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

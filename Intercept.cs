@@ -6,7 +6,7 @@ using Device = System.Int32;
 
 #nullable enable
 
-namespace XtraMouse
+namespace blekenbleu
 {
 	/// <summary>
 	/// Mouse Interception handling for MainWindow.xaml.cs

@@ -47,7 +47,7 @@
 using InputInterceptorNS;
 using System;
 
-namespace XtraMouse
+namespace blekenbleu
 {
     internal class Intercept
     {

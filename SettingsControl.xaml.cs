@@ -3,7 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace XtraMouse
+namespace blekenbleu
 {
 	/// <summary>
 	/// Interaction logic for SettingsControl.xaml
