@@ -69,9 +69,10 @@ namespace blekenbleu
 			Settings.Selected = SettingsControl.Selected;
 			if (null != Intermouse)
 			{
-				MessageBox.Show(Application.Current.MainWindow,
+/*				MessageBox.Show(Application.Current.MainWindow,
     					      	$"Intermouse.Devices({Intercept.Captured}):  " + Intermouse.Devices(Intercept.Captured),
                 				"XtraMouse.End()");
+ */
 				Settings.Count = Intermouse.Count;
 				Settings.Device = Intermouse.Devices(Intercept.Captured);
 				Settings.Stroke = Intercept.Stroke;
