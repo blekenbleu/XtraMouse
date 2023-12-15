@@ -6,19 +6,20 @@ namespace blekenbleu
 {
 	/// <summary>
 	/// Settings class, make sure it can be correctly serialized using JSON.net
+	/// Members must be public
 	/// </summary>
 	public class XtraMouseSettings
 	{
-		internal int SpeedWarningLevel = 100;
-		internal DateTime EndTime;
-		internal ushort state = 0;		// selected or captured?
-		internal short Selected = 0;	// mouse device number
-		internal int Count = 0;			// how many mice detected?
-		internal short[] Stroke = {0, 0, 0, 0, 0};
-		internal string Device = "";
+		public int SpeedWarningLevel = 100;
+		public DateTime EndTime;
+		public ushort state = 0;		// selected or captured?
+		public short Selected = 0;		// mouse device number
+		public int Count = 0;			// how many mice detected?
+		public short[] Stroke { get; set; } = {0, 0, 0, 0, 0};
+		public string Device { get; set; } = "";
 	}
 
-// define a class with Model-view-viewmodel pattern
+// define a class with Model-view-viewmodel pattern for dynamic UI
     public class DataViewModel : INotifyPropertyChanged
     {
         // One event handler for all property changes
