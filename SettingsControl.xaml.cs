@@ -31,11 +31,24 @@ namespace blekenbleu
 
 			this.DataContext = _mainViewModel;
 
-			if (0 != Intercept.code) {
+			if (0 == Intercept.code) {
+				plugin.Intermouse.Initialize(WriteStatus, ColorButton);
+				if (2 == plugin.Settings.state)
+				{
+					plugin.state = plugin.Settings.state;
+					Intercept.Captured = Intercept.Stroke[0] = Selected = plugin.Settings.Selected;
+					capture.Content = "click to center captured coordinates";
+					capture.Visibility = Visibility.Visible;
+					SHlabel.Content = plugin.Settings.Device;
+					select.Content = "Click to deselect";
+				} else {
+					plugin.state =  0;
+					Intercept.Captured = Intercept.Stroke[0] = Selected = 0;
+				}
+			} else {
 				select.Content = "OK";
 				SHlabel.Content = oops[plugin.state - 96];
 			}
-			else plugin.Intermouse.Initialize(WriteStatus, ColorButton);
 		}
 
 		// https://stackoverflow.com/questions/13121155

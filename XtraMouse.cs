@@ -13,9 +13,9 @@ namespace blekenbleu
 	[PluginName("XtraMouse")]
 	public class XtraMouse : IPlugin, IDataPlugin, IWPFSettingsV2
 	{
-		private XtraMouseSettings Settings;
-		internal Intercept Intermouse;		// instanced in SettingsControl()
-		internal ushort state = 99;			// assume the worst
+		internal XtraMouseSettings Settings;	// accessed in SettingsControl()
+		internal Intercept Intermouse;			// instanced in SettingsControl()
+		internal ushort state = 99;				// assume the worst
 
 		/// <summary>
 		/// Instance of the current plugin manager
@@ -150,6 +150,8 @@ namespace blekenbleu
 				this.AttachDelegate("button3", () => SettingsControl._mainViewModel.button[3]);
 				this.AttachDelegate("button4", () => SettingsControl._mainViewModel.button[4]);
 
+				this.AttachDelegate("state", () => state);
+				this.AttachDelegate("Settings.state", () => Settings.state);
 				this.AttachDelegate("Intermouse.Count", () => Intermouse.Count);
 				this.AttachDelegate("Settings.Count", () => Settings.Count);
 				this.AttachDelegate("Settings.Selected", () => Settings.Selected);

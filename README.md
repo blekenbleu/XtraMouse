@@ -92,8 +92,10 @@ namespace blekenbleu
 9. add icon, properties for mouse, scroll XY
 10. save mouse state @ e.g. game changes
 11. add button events, button and mouse value properties
+12. conditionally restore mouse state and captured mouse, if any
 #### status / To Do
-- conditionally restore mouse state, e.g. selected mouse
+- test for mouse configuration changes before restoring
+- build a release package:&nbsp; .zip with 2 .dll's
 
 #### SimHub-specific mouse interception plugin issues
 - when to continue using designated mouse?
