@@ -4,7 +4,7 @@
  plugin UI buttons turn red corresponding to pressed buttons of intercepted mice.  
 **Limitations**:  
 - The InputInterception driver has a 10 mouse limit (11 - 20) between Windows restarts.  
-- Disconnecting and reconnecting a mouse causes it to be reported as another mounse.
+- Disconnecting and reconnecting a mouse causes it to be reported as another mouse.
 
 <details><summary>click for build details</summary>
 
