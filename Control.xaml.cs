@@ -6,9 +6,9 @@ using System.Windows.Controls;
 namespace blekenbleu
 {
 	/// <summary>
-	/// Interaction logic for SettingsControl.xaml
+	/// Interaction logic for Control.xaml
 	/// </summary>
-	public partial class SettingsControl : UserControl
+	public partial class Control : UserControl
 	{
 		public XtraMouse Plugin { get; }
 		internal static short Selected = 0;
@@ -20,12 +20,12 @@ namespace blekenbleu
 		// callback needs to reference XAML control from a static method
 		internal static DataViewModel _mainViewModel = new();
 
-		public SettingsControl()
+		public Control()
 		{
 			InitializeComponent();
 		}
 
-		public SettingsControl(XtraMouse plugin) : this()
+		public Control(XtraMouse plugin) : this()
 		{
 			this.Plugin = plugin;
 

@@ -13,8 +13,8 @@ namespace blekenbleu
 	[PluginName("XtraMouse")]
 	public class XtraMouse : IPlugin, IDataPlugin, IWPFSettingsV2
 	{
-		internal XtraMouseSettings Settings;	// accessed in SettingsControl()
-		internal Intercept Intermouse;			// instanced in SettingsControl()
+		internal Settings Settings;	// accessed in Control()
+		internal Intercept Intermouse;			// instanced in Control()
 		internal ushort state = 99;				// assume the worst
 
 		/// <summary>
@@ -66,7 +66,7 @@ namespace blekenbleu
 		{
 			// Save settings
 			Settings.state = state;
-			Settings.Selected = SettingsControl.Selected;
+			Settings.Selected = Control.Selected;
 			if (null != Intermouse)
 			{
 /*				MessageBox.Show(Application.Current.MainWindow,
@@ -87,7 +87,7 @@ namespace blekenbleu
 			if (Intermouse.Count == Settings.Count
 			 && Intermouse.Devices(Settings.Selected) == Settings.Device)
 			{
-				Intercept.Captured = SettingsControl.Selected = Settings.Selected;
+				Intercept.Captured = Control.Selected = Settings.Selected;
 				state = Settings.state;
 				Intercept.Stroke = Settings.Stroke;
 			}
@@ -100,7 +100,7 @@ namespace blekenbleu
 		/// <returns></returns>
 		public System.Windows.Controls.Control GetWPFSettingsControl(PluginManager pluginManager)
 		{
-			return new SettingsControl(this);		// invoked *after* Init()
+			return new Control(this);		// invoked *after* Init()
 		}
 
 		/// <summary>
@@ -113,10 +113,10 @@ namespace blekenbleu
 			SimHub.Logging.Current.Info("XtraMouse Init()");
 
 			// setting this at Init() works for Events during DataUpdate()
-			SettingsControl._mainViewModel.ThisSet(this);
+			Control._mainViewModel.ThisSet(this);
 
 			// Load settings
-			Settings = this.ReadCommonSettings<XtraMouseSettings>("GeneralSettings", () => new XtraMouseSettings());
+			Settings = this.ReadCommonSettings<Settings>("GeneralSettings", () => new Settings());
 
 			// Declare a property available in the property list, this gets evaluated "on demand" (when shown or used in formulas)
 			this.AttachDelegate("CurrentDateTime", () => DateTime.Now);
@@ -144,18 +144,18 @@ namespace blekenbleu
 				this.AttachDelegate("Mouse_Y", () => Intercept.Stroke[2]);
 				this.AttachDelegate("Scroll_x", () => Intercept.Stroke[3]);
 				this.AttachDelegate("Scroll_y", () => Intercept.Stroke[4]);
-				this.AttachDelegate("button0", () => SettingsControl._mainViewModel.button[0]);
-				this.AttachDelegate("button1", () => SettingsControl._mainViewModel.button[1]);
-				this.AttachDelegate("button2", () => SettingsControl._mainViewModel.button[2]);
-				this.AttachDelegate("button3", () => SettingsControl._mainViewModel.button[3]);
-				this.AttachDelegate("button4", () => SettingsControl._mainViewModel.button[4]);
+				this.AttachDelegate("button0", () => Control._mainViewModel.button[0]);
+				this.AttachDelegate("button1", () => Control._mainViewModel.button[1]);
+				this.AttachDelegate("button2", () => Control._mainViewModel.button[2]);
+				this.AttachDelegate("button3", () => Control._mainViewModel.button[3]);
+				this.AttachDelegate("button4", () => Control._mainViewModel.button[4]);
 
 				this.AttachDelegate("state", () => state);
 				this.AttachDelegate("Settings.state", () => Settings.state);
 				this.AttachDelegate("Intermouse.Count", () => Intermouse.Count);
 				this.AttachDelegate("Settings.Count", () => Settings.Count);
 				this.AttachDelegate("Settings.Selected", () => Settings.Selected);
-				this.AttachDelegate("SettingsControl.Selected", () => SettingsControl.Selected);
+				this.AttachDelegate("Control.Selected", () => Control.Selected);
 				this.AttachDelegate("Intercept.Captured", () => Intercept.Captured);
 				this.AttachDelegate("Settings.Device", () => Settings.Device);
 				this.AttachDelegate("Intermouse.Devices(Settings.Selected)", () => Intermouse.Devices(Settings.Selected));

@@ -8,7 +8,7 @@ namespace blekenbleu
 	/// Settings class, make sure it can be correctly serialized using JSON.net
 	/// Members must be public
 	/// </summary>
-	public class XtraMouseSettings
+	public class Settings
 	{
 		public int SpeedWarningLevel = 100;
 		public DateTime EndTime;
