@@ -127,4 +127,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>cd "$(ProjectDir)\bin\Release"
+if $(ConfigurationName) == Release (7z u R:\TEMP\XtraMouse.zip XtraMouse.dll InputIntercept.dll)</PostBuildEvent>
+  </PropertyGroup>
 </Project>
