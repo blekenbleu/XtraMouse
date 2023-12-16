@@ -170,10 +170,6 @@ namespace blekenbleu
 
 		public string Devices(short stick)
 		{
-			if (2 > devices?.Count)
-			{
-				return "No extra mouse to capture";
-			}
 			for (int dd = 0; dd < devices?.Count; dd++)
 			{
 				if (stick == devices[dd].Device)
