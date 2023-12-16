@@ -6,16 +6,16 @@ using System.Windows.Controls;
 namespace blekenbleu
 {
 	/// <summary>
-	/// Interaction logic for Control.xaml
+	/// Control.xaml interaction logic
 	/// </summary>
 	public partial class Control : UserControl
 	{
 		public XtraMouse Plugin { get; }
 		internal static short Selected = 0;
 		string[] oops = { "Only one mouse;  none available to capture",
-						"null Intercept.devices.Count",
-						"null Intercept.devices",
-						"Intercept.Initialize():  failed" };
+				"null Intercept.devices.Count",
+				"null Intercept.devices",
+				"Intercept.Initialize():  failed" };
 
 		// callback needs to reference XAML control from a static method
 		internal static DataViewModel _mainViewModel = new();
@@ -23,6 +23,20 @@ namespace blekenbleu
 		public Control()
 		{
 			InitializeComponent();
+		}
+
+		void None()						// no device available
+		{
+			SHlabel.Content = oops[0];
+			select.Content = "OK";
+			Status.Visibility = Visibility.Hidden;
+			Plugin.state = 0;
+		}
+
+		// https://stackoverflow.com/questions/13121155
+		public static void WriteStatus(string text)
+		{
+			_mainViewModel.StatusText = text;		// _mainViewModel is static
 		}
 
 		public Control(XtraMouse plugin) : this()
@@ -44,19 +58,13 @@ namespace blekenbleu
 					SHlabel.Content = plugin.Settings.Device;
 					select.Content = "Click to deselect";
 				} else {
-					plugin.state =  0;
+					plugin.state = 0;
 					Intercept.Captured = Intercept.Stroke[0] = Selected = 0;
 				}
 			} else {
 				select.Content = "OK";
 				SHlabel.Content = oops[plugin.state - 96];
 			}
-		}
-
-		// https://stackoverflow.com/questions/13121155
-		public static void WriteStatus(string text)
-		{
-			_mainViewModel.StatusText = text;		// _mainViewModel is static
 		}
 
 		public static void ColorButton (ushort index, bool down)
@@ -111,45 +119,19 @@ namespace blekenbleu
 			}
 		}
 
-		void None()
-		{
-			SHlabel.Content = oops[0];
-			select.Content = "OK";
-			Status.Visibility = Visibility.Hidden;
-			Plugin.state = 0;
-		}
-
-		bool Hooked()		// callback filters on Intercept.Captured
-		{
-			string foo = Plugin.Intermouse?.Devices(Intercept.Captured);
-			if (null != foo && "" != foo)
-			{
-				SHlabel.Content = foo;
-				if (1 == Plugin.state)
-					Plugin.state++;
-				return true;
-			}
-			return false;
-		}
-
 		private void Capture_Click(object sender, RoutedEventArgs e)
 		{
 			if (2 > Intercept.devices.Count)
 				None();
 			else if (2 == Plugin.state)
-			{
 				Intercept.Stroke[1] = Intercept.Stroke[2] = Intercept.Stroke[3] = Intercept.Stroke[4] = 0;
-//				SHlabel.Content = _mainViewModel.ButtonColor0+_mainViewModel.ButtonColor1+_mainViewModel.ButtonColor2
-//					+_mainViewModel.ButtonColor3+_mainViewModel.ButtonColor4;
-				return;
-			}
 			else 
 			{
 				Intercept.Captured = Selected;
 
-//				capture.Visibility = Visibility.Hidden;
 				capture.Content = "click to center captured coordinates";
-				Hooked();
+				SHlabel.Content = Plugin.Intermouse?.Devices(Intercept.Captured);
+				Plugin.state++;
 			}
 		}
 	}

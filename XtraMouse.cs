@@ -159,6 +159,7 @@ namespace blekenbleu
 				this.AttachDelegate("Intercept.Captured", () => Intercept.Captured);
 				this.AttachDelegate("Settings.Device", () => Settings.Device);
 				this.AttachDelegate("Intermouse.Devices(Settings.Selected)", () => Intermouse.Devices(Settings.Selected));
+				this.AttachDelegate("Intermouse.Devices(Intercept.Captured)", () => Intermouse.Devices(Intercept.Captured));
 
 				// Declare events
 				this.AddEvent("Button0");

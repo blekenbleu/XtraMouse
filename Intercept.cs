@@ -170,7 +170,8 @@ namespace blekenbleu
 
 		public string Devices(short stick)
 		{
-			for (int dd = 0; dd < devices?.Count; dd++)
+			devices = InputInterceptor.GetDeviceList(InputInterceptor.IsMouse);
+			for (int dd = 0; 1 < devices?.Count && dd < devices?.Count; dd++)
 			{
 				if (stick == devices[dd].Device)
 					return $"Mouse: {devices[dd].Device}: " + devices[dd].Names[0];

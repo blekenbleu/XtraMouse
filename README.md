@@ -1,7 +1,12 @@
 # XtraMouse
  SimHub plugin to intercept selected extra mouse events,  
  using [Model-view-viewmodel pattern](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm) for `PropertyChangedEventHandler`;  
- plugin UI buttons turn red corresponding to pressed buttons of intercepted mice.
+ plugin UI buttons turn red corresponding to pressed buttons of intercepted mice.  
+**Limitations**:  
+- The InputInterception driver has a 10 mouse limit (11 - 20) between Windows restarts.  
+- Disconnecting and reconnecting a mouse causes it to be reported as another mounse.
+
+<details><summary>click for build details</summary>
 
 - Built using Visual Studio 2022 Community with C# `<langVersion>9.0`  
 - Requires `stripped` branch of [InputIntercept](https://github.com/blekenbleu/InputIntercept);&nbsp; see [`<HintPath>`](https://github.com/blekenbleu/XtraMouse/blob/main/XtraMouse.csproj#L55)  
@@ -41,7 +46,7 @@
 	**Note**: &nbsp; adding `Intercept.cs` file in VS *does NOT* add the class;  
 	that is a separate step under Solution Exploder, what a PoS...  
 
-<details><summary>trivial <code>Intercept.cs</code>, just to build and debug the project</summary>
+**trivial <code>Intercept.cs</code>, just to build and debug the project**
 
 <pre>
 using InputInterceptorNS;
@@ -69,8 +74,6 @@ namespace blekenbleu
 
 </pre>
 
-</details>
-
 4. replaced SimHUb demo UI XAML content with that from WPF_XAML  
 
 5.  Added to `XtraMouse.csproj` for `MouseHook` callback syntax:  
@@ -92,10 +95,13 @@ namespace blekenbleu
 9. add icon, properties for mouse, scroll XY
 10. save mouse state @ e.g. game changes
 11. add button events, button and mouse value properties
-12. conditionally restore mouse state and captured mouse, if any
+12. at restarts, conditionally restore mouse state and captured mouse, if any
 13. test for captured mouse change and more than one mouse before restoring
+
+</details>
+
 #### status / To Do
-- build a release package:&nbsp; .zip with 2 .dll's
+- build a release package:&nbsp; `XtraMouse.zip` with `XtraMouse.dll` and `InputIntercept.dll`  
 
 #### SimHub-specific mouse interception plugin issues
 - when to continue using designated mouse?
