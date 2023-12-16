@@ -1,4 +1,4 @@
-# XtraMouse
+# XtraMouse - debug branch
  SimHub plugin to intercept selected extra mouse events,  
  using [Model-view-viewmodel pattern](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm) for `PropertyChangedEventHandler`;  
  plugin UI buttons turn red corresponding to pressed buttons of intercepted mice.  
@@ -97,11 +97,12 @@ namespace blekenbleu
 11. add button events, button and mouse value properties
 12. at restarts, conditionally restore mouse state and captured mouse, if any
 13. test for captured mouse change and more than one mouse before restoring
+14. build a release package:&nbsp; `XtraMouse.zip` with `XtraMouse.dll` and `InputIntercept.dll`  
 
 </details>
 
 #### status / To Do
-- build a release package:&nbsp; `XtraMouse.zip` with `XtraMouse.dll` and `InputIntercept.dll`  
+- removed debug content (properties)
 
 #### SimHub-specific mouse interception plugin issues
 - when to continue using designated mouse?
