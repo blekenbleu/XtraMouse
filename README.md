@@ -97,13 +97,14 @@ namespace blekenbleu
 11. add button events, button and mouse value properties
 12. at restarts, conditionally restore mouse state and captured mouse, if any
 13. test for captured mouse change and more than one mouse before restoring
+14. build a release package:&nbsp; `XtraMouse.zip` with `XtraMouse.dll` and `InputIntercept.dll`  
+15. removed debug content:&nbsp properties and added Build debug SimHubWPF.exe
 
 </details>
 
 #### status / To Do
-- build a release package:&nbsp; `XtraMouse.zip` with `XtraMouse.dll` and `InputIntercept.dll`  
+- wait for feedback or inspiration
 
-#### SimHub-specific mouse interception plugin issues
-- when to continue using designated mouse?
-- [elapsed time from plugin end to restart](https://stackoverflow.com/questions/2821040/how-do-i-get-the-time-difference-between-two-datetime-objects-using-c)
+#### SimHub-specific mouse interception plugin - when to continue using designated mouse?
 - continue using a mouse if the same device number and hardware ID? 
+- [elapsed time from plugin end to restart](https://stackoverflow.com/questions/2821040/how-do-i-get-the-time-difference-between-two-datetime-objects-using-c)

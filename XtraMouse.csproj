@@ -36,6 +36,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <DebugType>pdbonly</DebugType>
     <OutputPath>bin\$(Configuration)\</OutputPath>
+    <StartAction>Program</StartAction>
+    <StartProgram>..\..\SimHubWPF.exe</StartProgram>
     <OutDir>..\..\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">

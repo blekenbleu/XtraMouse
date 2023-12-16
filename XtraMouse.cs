@@ -46,14 +46,6 @@ namespace blekenbleu
 			// Define the value of our property (declared in init)
 			if (data.GameRunning)
 			{
-				if (data.OldData != null && data.NewData != null)
-				{
-					if (data.OldData.SpeedKmh < Settings.SpeedWarningLevel && data.OldData.SpeedKmh >= Settings.SpeedWarningLevel)
-					{
-						// Trigger an event
-						this.TriggerEvent("SpeedWarning");
-					}
-				}
 			}
 		}
 
@@ -121,7 +113,6 @@ namespace blekenbleu
 			// Declare a property available in the property list, this gets evaluated "on demand" (when shown or used in formulas)
 			this.AttachDelegate("CurrentDateTime", () => DateTime.Now);
 			this.AttachDelegate("Settings.EndTime", () => Settings.EndTime);
-			this.AttachDelegate("SpeedWarning", () => Settings.SpeedWarningLevel);
 
 			try
             {
@@ -150,16 +141,7 @@ namespace blekenbleu
 				this.AttachDelegate("button3", () => Control._mainViewModel.button[3]);
 				this.AttachDelegate("button4", () => Control._mainViewModel.button[4]);
 
-				this.AttachDelegate("state", () => state);
-				this.AttachDelegate("Settings.state", () => Settings.state);
 				this.AttachDelegate("Intermouse.Count", () => Intermouse.Count);
-				this.AttachDelegate("Settings.Count", () => Settings.Count);
-				this.AttachDelegate("Settings.Selected", () => Settings.Selected);
-				this.AttachDelegate("Control.Selected", () => Control.Selected);
-				this.AttachDelegate("Intercept.Captured", () => Intercept.Captured);
-				this.AttachDelegate("Settings.Device", () => Settings.Device);
-				this.AttachDelegate("Intermouse.Devices(Settings.Selected)", () => Intermouse.Devices(Settings.Selected));
-				this.AttachDelegate("Intermouse.Devices(Intercept.Captured)", () => Intermouse.Devices(Intercept.Captured));
 
 				// Declare events
 				this.AddEvent("Button0");
@@ -168,19 +150,6 @@ namespace blekenbleu
 				this.AddEvent("Button3");
 				this.AddEvent("Button4");
 			}
-
-			// Declare an action which can be called
-			this.AddAction("IncrementSpeedWarning",(a, b) =>
-			{
-				Settings.SpeedWarningLevel++;
-				SimHub.Logging.Current.Info("Speed warning changed");
-			});
-
-			// Declare an action which can be called
-			this.AddAction("DecrementSpeedWarning", (a, b) =>
-			{
-				Settings.SpeedWarningLevel--;
-			});
 		}
 	}
 }

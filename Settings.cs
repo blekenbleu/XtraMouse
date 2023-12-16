@@ -10,7 +10,6 @@ namespace blekenbleu
 	/// </summary>
 	public class Settings
 	{
-		public int SpeedWarningLevel = 100;
 		public DateTime EndTime;
 		public ushort state = 0;		// selected or captured?
 		public short Selected = 0;		// mouse device number
