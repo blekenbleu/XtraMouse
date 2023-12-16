@@ -22,7 +22,7 @@
 		push `<Reference Include` `<ItemGroup>`  
 	- push `<Compile Include` `<ItemGroup>`, with  
 		`"XtraMouse.cs"` replacing `"UserControl1.cs"` and  
-		`"SettingsControl.xaml.cs"` replacing `"UserControl1.Designer.cs"`  
+		`"Control.xaml.cs"` replacing `"UserControl1.Designer.cs"`  
 	- push `<Page Include="Properties\DesignTimeResources.xaml"` `<ItemGroup>`
 - Replace corresponding source files
 - use VIM to
@@ -86,7 +86,7 @@ namespace blekenbleu
 	- *after* `InputInterceptor.Initialize()` success
 	- `Intermouse?.End();` in `XtraMouse.End()`
 
-8. pushed methods from `XPF_XAML/MainWindow.xaml.cs` to `SettingsControl.xaml.cs`
+8. pushed methods from `XPF_XAML/MainWindow.xaml.cs` to `Control.xaml.cs`
 	- `this.DataContext = _mainViewModel;`
 	![](Docs/debug.png)  
 9. add icon, properties for mouse, scroll XY
