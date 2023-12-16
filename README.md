@@ -93,8 +93,8 @@ namespace blekenbleu
 10. save mouse state @ e.g. game changes
 11. add button events, button and mouse value properties
 12. conditionally restore mouse state and captured mouse, if any
+13. test for captured mouse change and more than one mouse before restoring
 #### status / To Do
-- test for mouse configuration changes before restoring
 - build a release package:&nbsp; .zip with 2 .dll's
 
 #### SimHub-specific mouse interception plugin issues
